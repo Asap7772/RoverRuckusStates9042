@@ -91,7 +91,7 @@ public class Teleop extends OpMode {
         }
 
         if(gamepad2.left_bumper){
-            dump.setPosition(0.93); // 1 - 10/180
+            dump.setPosition(1);
         }
 
         intake.setPower(power);

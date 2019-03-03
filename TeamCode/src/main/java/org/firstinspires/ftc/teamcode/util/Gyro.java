@@ -20,6 +20,10 @@ public class Gyro {
         initGyro(map);
     }
 
+    public Gyro(HardwareMap map, String name){
+        initGyro(map, name);
+    }
+
     public void initGyro(HardwareMap hardwareMap)
     {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

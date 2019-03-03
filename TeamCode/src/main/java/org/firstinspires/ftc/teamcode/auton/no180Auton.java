@@ -46,7 +46,7 @@ public class no180Auton extends LinearOpMode {
         ElapsedTime t = new ElapsedTime();
         t.reset();
 
-        while (opModeIsActive() && t.seconds() < 2) {
+        while (opModeIsActive() && t.seconds() < 3) {
 
         }
         t.reset();
@@ -55,10 +55,11 @@ public class no180Auton extends LinearOpMode {
         while (opModeIsActive() && t.seconds() < 1) {
 
         }
-//        t.reset();
-//        while (opModeIsActive() && t.seconds() < 1) {
-//            driveTrain.setPower(0.2, 0.2);
-//        }
+        t.reset();
+
+        while (opModeIsActive() && t.seconds() < 1) {
+            driveTrain.setPower(0.2, 0.2);
+        }
 
         t.reset();
         while (opModeIsActive() && t.seconds() < 0.5) {
