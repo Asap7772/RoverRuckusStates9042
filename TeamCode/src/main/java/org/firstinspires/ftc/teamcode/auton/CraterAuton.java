@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.util.DriveTrain;
 import org.firstinspires.ftc.teamcode.util.GoldAlignUtil;
 import org.firstinspires.ftc.teamcode.util.Logging;
 
-@Autonomous(name = "Landing Example", group = "testing")
-public class Landing extends LinearOpMode{
+@Autonomous(name = "Crater Auton", group = "testing")
+public class CraterAuton extends LinearOpMode{
     DriveTrain driveTrain;
     DcMotor left_lift, right_lift;
     GoldAlignUtil util;
@@ -67,22 +67,30 @@ public class Landing extends LinearOpMode{
             driveTrain.setPower(-power, power);
             Logging.log("is Aligned", util.isAligned(), telemetry);
             Logging.log("X Position", xpos, telemetry);
-//            Logging.log("offset", offset, telemetry);
             telemetry.update();
-//            if (elapsedTime.seconds() > 3) {
             if (elapsedTime.seconds() > 4) {
                 if (first) {
                     power = -power;
                     first = false;
                 }
             }
-//            if (elapsedTime.seconds() > 6) {
             if (elapsedTime.seconds() > 8) {
                 break;
             }
         }
+
         driveTrain.stop();
         util.stop();
+
+        driveTrain.setPower(-0.4);
+        sleep(1000);
+        driveTrain.stop();
+
+        //TODO create depot auton // unlatching + sampling
+        //1. Test in all position (left, center and right and check if there are no functionality errors)
+        //2. figure out the logic for depot (make a plan, psuedocode) save and upload to drive
+        //a. gyro sensor (read up on that again), Proportional turning, game manual for the math (how much to turn and drive forward)
+        //3. know when to initialize the gyro sensor
 
     }
 }

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.util.DriveTrain;
 import org.firstinspires.ftc.teamcode.util.Gyro;
 
 @Disabled
-@Autonomous(name = "Landing Test", group = "landing")
+@Autonomous(name = "CraterAuton Test", group = "landing")
 public class LandingTest extends LinearOpMode {
     DcMotor extend;
     DcMotor left_lift, right_lift;
