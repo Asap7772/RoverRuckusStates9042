@@ -6,21 +6,22 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.DriveTrain;
 import org.firstinspires.ftc.teamcode.util.GoldAlignUtil;
 import org.firstinspires.ftc.teamcode.util.Gyro;
+import org.firstinspires.ftc.teamcode.util.GyroProportional;
 import org.firstinspires.ftc.teamcode.util.Logging;
 
-@Autonomous(name = "Crater Auton", group = "testing")
-public class CraterAuton extends LinearOpMode{
-    DriveTrain driveTrain;
-    DcMotor left_lift, right_lift;
-    GoldAlignUtil util;
+@Autonomous(name = "Depot Auton", group = "testing")
+public class DepotAuton extends LinearOpMode {
 
+    private DcMotor left_lift, right_lift;
+    private DriveTrain driveTrain;
+    private GoldAlignUtil util;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //init
         left_lift = hardwareMap.dcMotor.get("left");
         right_lift = hardwareMap.dcMotor.get("right");
         driveTrain = new DriveTrain(hardwareMap);
@@ -41,6 +42,9 @@ public class CraterAuton extends LinearOpMode{
 
         left_lift.setPower(0);
         right_lift.setPower(0);
+
+
+        Gyro gyro = new Gyro(hardwareMap);
 
         driveTrain.setPower(0.4);
         sleep(2000);
@@ -92,5 +96,25 @@ public class CraterAuton extends LinearOpMode{
         //a. gyro sensor (read up on that again), Proportional turning, game manual for the math (how much to turn and drive forward)
         //3. know when to initialize the gyro sensor
 
+
+        if(Math.abs(gyro.getHeading())  < 15){ // center so we can drive straight
+            driveTrain.setPower(0.4);
+            sleep(1000);
+            driveTrain.stop();
+        }else if(gyro.getHeading() < 0){
+            Gyro gyro2 = new Gyro(hardwareMap, "imu2");
+            double target = 90;
+            while(opModeIsActive() && Math.abs(Math.abs(gyro2.getHeading()) - target) < 1){
+                double powerTurn = Constants.P_CONSTANT_TURNING * Math.abs(Math.abs(gyro2.getHeading()) - target);
+                driveTrain.setPower(powerTurn, -powerTurn);
+            }
+        }else{
+            Gyro gyro2 = new Gyro(hardwareMap, "imu2");
+            double target = 90;
+            while(opModeIsActive() && Math.abs(Math.abs(gyro2.getHeading()) - target) < 1){
+                double powerTurn = Constants.P_CONSTANT_TURNING * Math.abs(Math.abs(gyro2.getHeading()) - target);
+                driveTrain.setPower(-powerTurn, powerTurn);
+            }
+        }
     }
 }
